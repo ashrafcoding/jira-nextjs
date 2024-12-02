@@ -1,0 +1,32 @@
+-- Insert example projects
+INSERT INTO projects (name, description, status, owner_id)
+VALUES 
+('Project Alpha', 'This is the first project focused on feature development.', 'in-progress', 'c054833f-c4a7-4ced-8bfb-dd02f2be8964'),
+('Project Beta', 'This is the second project focused on bug fixes.', 'pending', 'c054833f-c4a7-4ced-8bfb-dd02f2be8964'),
+('Project Gamma', 'This project is dedicated to UI/UX enhancements.', 'completed', 'c054833f-c4a7-4ced-8bfb-dd02f2be8964'),
+('Project Delta', 'Internal project for infrastructure updates.', 'in-progress', 'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510'),
+('Project Epsilon', 'Research and development for new features.', 'pending', '12c62a29-07aa-4f51-ba65-adb2aa7b58f7');
+
+users
+c054833f-c4a7-4ced-8bfb-dd02f2be8964
+c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510
+12c62a29-07aa-4f51-ba65-adb2aa7b58f7
+
+
+projects id
+cfbe74ae-621f-4ed8-88c7-f0b5085cb794
+70f4752f-a064-43dc-98a8-c359defda186
+874dc89f-0c1f-43b1-9c98-bfba89699825
+08439b8a-d253-40bd-9767-b144944285af
+9d8ac9ec-4a52-4f46-9ff4-ab2fa458f0b0
+
+
+INSERT INTO project_members (project_id, user_id, role)
+VALUES 
+('cfbe74ae-621f-4ed8-88c7-f0b5085cb794', 'c054833f-c4a7-4ced-8bfb-dd02f2be8964', 'member'),
+('70f4752f-a064-43dc-98a8-c359defda186', 'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510', 'owner');
+
+
+delete from projects where projects.name='project ceta';
+
+
