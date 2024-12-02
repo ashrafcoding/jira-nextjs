@@ -9,6 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import MenuActions from "./menu-actions";
+import { getProjectIssues } from "@/app/controllers/issue-controllers";
+
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -39,6 +41,7 @@ export default function ProjectCard({ className, project, ...props }: ProjectCar
           <div>
             <CardTitle className="capitalize">{project.name}</CardTitle>
             <CardDescription className="mt-2">{project.description}</CardDescription>
+            <Separator className="mt-4" />
           </div>
         </div>
         <MenuActions 
