@@ -1,3 +1,4 @@
+"use client"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -10,13 +11,16 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { deleteProject } from "../controllers/project-controllers"
+import { useSession } from "next-auth/react"
+
   
-  export default function DeleteAlert({
+  export default  function DeleteAlert({
     children, id
   }: {
     children: React.ReactNode, id: string
   }) {
-    const handleDelete = async() => await deleteProject(id)    
+    const { data: session } = useSession()
+    const handleDelete = async() => await deleteProject(id, session?.user?.email as string)    
     return (
       <AlertDialog>
         <AlertDialogTrigger asChild>

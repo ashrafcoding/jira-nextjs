@@ -1,8 +1,6 @@
 import { z, object, string } from "zod";
 
 
-export const cloudinaryUrl =
-  "https://res.cloudinary.com/dnbtcv8mr/image/upload/v1731223851/";
 
 export type Product = {
   id: string;

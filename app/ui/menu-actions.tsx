@@ -1,7 +1,6 @@
 "use client";
 
 import { MoreHorizontal, Pencil, Trash2, Users } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EditProjectModal } from "./edit-project-modal";
-import { deleteProject } from "../controllers/project-controllers";
-import { useToast } from "@/hooks/use-toast";
+
+import DeleteAlert from "./delete-alert";
 
 interface MenuActionsProps {
   id: string;
@@ -22,34 +21,7 @@ interface MenuActionsProps {
 }
 
 export default function MenuActions({ id, name, description, isOwner }: MenuActionsProps) {
-  const { toast } = useToast();
-  const { data: session } = useSession();
-
-  async function handleDelete() {
-    if (!session?.user?.email) {
-      toast({
-        title: "Error",
-        description: "You must be logged in to delete a project",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      await deleteProject(id, session.user.email);
-      toast({
-        title: "Project deleted successfully",
-      });
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Failed to delete project",
-        description: error instanceof Error ? error.message : "An unknown error occurred",
-        variant: "destructive",
-      });
-    }
-  }
-
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -76,13 +48,17 @@ export default function MenuActions({ id, name, description, isOwner }: MenuActi
               Manage Members
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DeleteAlert id={id}>
+              <Button variant="ghost">
             <DropdownMenuItem 
               className="text-red-600" 
-              onClick={handleDelete}
+              // onClick={handleDelete}
             >
               <Trash2 className="mr-2 h-4 w-4" />
               Delete Project
             </DropdownMenuItem>
+              </Button>
+            </DeleteAlert>
           </>
         ) : (
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
