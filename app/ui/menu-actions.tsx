@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EditProjectModal } from "./edit-project-modal";
-
 import DeleteAlert from "./delete-alert";
 
 interface MenuActionsProps {
@@ -21,7 +20,6 @@ interface MenuActionsProps {
 }
 
 export default function MenuActions({ id, name, description, isOwner }: MenuActionsProps) {
-  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -49,15 +47,13 @@ export default function MenuActions({ id, name, description, isOwner }: MenuActi
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DeleteAlert id={id}>
-              <Button variant="ghost">
-            <DropdownMenuItem 
-              className="text-red-600" 
-              // onClick={handleDelete}
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete Project
-            </DropdownMenuItem>
-              </Button>
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="text-red-600"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete Project
+              </DropdownMenuItem>
             </DeleteAlert>
           </>
         ) : (
