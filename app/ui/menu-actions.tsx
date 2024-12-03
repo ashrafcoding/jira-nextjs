@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EditProjectModal } from "./edit-project-modal";
 import DeleteAlert from "./delete-alert";
+import { ViewMembersModal } from "./view-members-modal";
+
 
 interface MenuActionsProps {
   id: string;
@@ -57,10 +59,12 @@ export default function MenuActions({ id, name, description, isOwner }: MenuActi
             </DeleteAlert>
           </>
         ) : (
+          <ViewMembersModal projectId={id}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <Users className="mr-2 h-4 w-4" />
             View Members
           </DropdownMenuItem>
+        </ViewMembersModal>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

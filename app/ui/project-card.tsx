@@ -9,8 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import MenuActions from "./menu-actions";
-import { getProjectIssues } from "@/app/controllers/issue-controllers";
-
+import { getProjectIssues, getProjectIssueStats } from "@/app/controllers/issue-controllers";
+import Link from "next/link";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -29,36 +29,38 @@ interface ProjectCardProps extends CardProps {
   project: Project;
 }
 
-export default function ProjectCard({ className, project, ...props }: ProjectCardProps) {
+export default async function ProjectCard({ className, project, ...props }: ProjectCardProps) {
+  // Fetch issue statistics for this project
+  const stats = await getProjectIssueStats(project.id);
+  
   return (
-    <Card className={cn("w-[280px]", className)} {...props}>
-      <div className="flex justify-between p-6">
-        <div className="flex items-start gap-4">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div>
-            <CardTitle className="capitalize">{project.name}</CardTitle>
-            <CardDescription className="mt-2">{project.description}</CardDescription>
-            <Separator className="mt-4" />
+    
+      <Card className={cn("w-[280px]", className)} {...props}>
+        <div className="flex justify-between p-6">
+        <Link href={`/projects/${project.id}`}>
+          <div className="flex items-start gap-4">
+            
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <div>
+              <CardTitle className="capitalize">{project.name}</CardTitle>
+              <CardDescription className="mt-2">{project.description}</CardDescription>
+              <Separator className="mt-4" />
+            </div>
           </div>
+          </Link>
+
+          <MenuActions 
+            id={project.id} 
+            name={project.name} 
+            description={project.description} 
+            isOwner={project.is_owner} 
+          />
         </div>
-        <MenuActions 
-          id={project.id} 
-          name={project.name} 
-          description={project.description} 
-          isOwner={project.is_owner} 
-        />
-      </div>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="flex h-5 items-center justify-around text-xs font-bold">
-            <div>open 4/4</div>
-            <Separator orientation="vertical" className="h-14" />
-            <div>closed 1/4</div>
-          </div>
-          <div className="flex space-x-2">
+        <CardContent>
+          <div className="flex items-center justify-between space-x-4">
             {project.is_owner && (
               <Badge variant="default">Owner</Badge>
             )}
@@ -68,8 +70,25 @@ export default function ProjectCard({ className, project, ...props }: ProjectCar
               </Badge>
             )}
           </div>
-        </div>
-      </CardContent>
-    </Card>
+          <div className="flex h-5 items-center justify-around text-xs font-medium mt-4">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-green-500" />
+              <span>Open {stats.open}/{stats.total}</span>
+            </div>
+            <Separator orientation="vertical" className="h-4" />
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-gray-500" />
+              <span>Closed {stats.closed}/{stats.total}</span>
+            </div>
+          </div>
+          <div className="flex space-x-2">
+            {project.is_owner && (
+              <Badge variant="outline" className="mt-2">
+                Project Admin
+              </Badge>
+            )}
+          </div>
+        </CardContent>
+      </Card>
   );
 }

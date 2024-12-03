@@ -117,3 +117,35 @@ export async function updateProject(id: string, name: string, description: strin
     throw error;
   }
 }
+
+// In project-controllers.ts
+export async function getProjectMembers(projectId: string) {
+  'use server';
+  
+  try {
+    const members = await sql`
+      SELECT 
+        u.id,
+        u.name,
+        u.email,
+        CASE 
+          WHEN p.owner_id = u.id THEN 'owner'
+          ELSE COALESCE(pm.role, 'member')
+        END as role
+      FROM bug_users u
+      LEFT JOIN project_members pm ON u.id = pm.user_id
+      LEFT JOIN projects p ON pm.project_id = p.id
+      WHERE p.id = ${projectId}
+      ORDER BY 
+        CASE 
+          WHEN p.owner_id = u.id THEN 1
+          ELSE 2
+        END,
+        u.name
+    `;
+    return members.rows;
+  } catch (error) {
+    console.error('Error fetching project members:', error);
+    throw error;
+  }
+}

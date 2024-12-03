@@ -28,80 +28,47 @@ interface Project {
 
 export default async function HomePage() {
   const session = await auth();
-  
+
   if (!session?.user?.email) {
     redirect("/login");
   }
 
-  const projects = (await getUserProjects(session.user.email)) as Project[];
-  
+  const projects = await getUserProjects(session.user.email);
+
   return (
-    <div>
-      <div className="flex items-center justify-between space-y-2 px-8 py-4">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
-          <p className="text-muted-foreground">
-            Here&apos;s a list of your projects and projects you&apos;re a member of
-          </p>
-        </div>
+    <main className="flex min-h-screen flex-col p-6">
+      <div className="flex items-center justify-between space-y-2">
+        <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
         <div className="flex items-center space-x-2">
-          <Image
-            src="/multitask3.jpg"
-            alt="Multitask"
-            width={200}
-            height={200}
-            priority
-            className="hidden md:block"
-          />
-        </div>
-      </div>
-      <div className="flex justify-between items-center px-6 py-4">
-        <div className="flex gap-4">
-          <div>
-            <Select defaultValue="all">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select a filter" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Filter</SelectLabel>
-                  <SelectItem value="all">All Projects</SelectItem>
-                  <SelectItem value="owned">Owned Projects</SelectItem>
-                  <SelectItem value="member">Member Projects</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Select defaultValue="newest">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Sort by</SelectLabel>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="oldest">Oldest First</SelectItem>
-                  <SelectItem value="name">Project Name</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <div className="flex gap-4 items-center">
-          <SlidersHorizontal className="h-4 w-4" />
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SlidersHorizontal className="mr-2 h-4 w-4" />
+              <SelectValue placeholder="Filter by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Filter</SelectLabel>
+                <SelectItem value="all">All Projects</SelectItem>
+                <SelectItem value="owned">Owned Projects</SelectItem>
+                <SelectItem value="member">Member Projects</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <CreateProjectModal />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6">
-        {projects.map((project) => (
+
+      <div className="flex-1 space-y-4 pt-4">
+        <div className="grid gap-4 md:grid-cols-2 sm:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
+          {projects.map((project) => (
           <ProjectCard
             key={project.id}
-            project={project}
+            project={project as Project} 
             className="w-full"
           />
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

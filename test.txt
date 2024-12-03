@@ -30,3 +30,105 @@ VALUES
 delete from projects where projects.name='project ceta';
 
 
+-- Example issues for a project (Replace project_id, reporter_id, and assignee_id with actual UUIDs from your database)
+INSERT INTO issues (
+    title,
+    description,
+    status,
+    priority,
+    project_id,
+    reporter_id,
+    assignee_id
+) VALUES 
+    (
+        'Authentication not working in production',
+        'Users are unable to log in using their credentials in the production environment. Works fine in development.',
+        'high',
+        'critical',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        'c054833f-c4a7-4ced-8bfb-dd02f2be8964',
+        'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510'
+    ),
+    (
+        'Implement dark mode support',
+        'Add system-wide dark mode support using next-themes. Should respect system preferences.',
+        'in_progress',
+        'medium',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        'c054833f-c4a7-4ced-8bfb-dd02f2be8964',
+        'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510'
+    ),
+    (
+        'Mobile responsive layout issues',
+        'Dashboard layout breaks on mobile devices smaller than 375px width.',
+        'open',
+        'high',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        'c054833f-c4a7-4ced-8bfb-dd02f2be8964',
+        'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510'
+    ),
+    (
+        'Add email notifications for project updates',
+        'Users should receive email notifications when they are assigned to a project or when project status changes.',
+        'open',
+        'medium',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7',
+        null
+    ),
+    (
+        'Optimize image loading performance',
+        'Large images are causing slow page loads. Implement lazy loading and proper image optimization.',
+        'in_progress',
+        'high',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7',
+        'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510'
+    ),
+    (
+        'Update dependencies to latest versions',
+        'Several npm packages are outdated and have security vulnerabilities.',
+        'resolved',
+        'medium',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7',
+        'c0c2370b-3ee9-4e56-8a71-c4d4e8ba8510'
+    ),
+    (
+        'Fix typo in welcome email',
+        'There is a typo in the welcome email template: "your" should be "you are".',
+        'closed',
+        'low',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7'
+    ),
+    (
+        'Add loading states to all buttons',
+        'Implement loading states for all interactive buttons to improve user feedback.',
+        'open',
+        'low',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        'c054833f-c4a7-4ced-8bfb-dd02f2be8964',
+        null
+    ),
+    (
+        'Implement project member roles',
+        'Add role-based access control for project members (admin, member, viewer).',
+        'in_progress',
+        'high',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7'
+    ),
+    (
+        'Add project activity timeline',
+        'Create a timeline showing all project activities and changes.',
+        'open',
+        'medium',
+        '9f00aade-19e3-47d4-9f05-11ea5220d875',
+        '12c62a29-07aa-4f51-ba65-adb2aa7b58f7',
+        null
+    );
+
+
