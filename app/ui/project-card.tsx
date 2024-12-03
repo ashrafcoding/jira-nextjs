@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import MenuActions from "./menu-actions";
-import { getProjectIssues, getProjectIssueStats } from "@/app/controllers/issue-controllers";
+import {  getProjectIssueStats } from "@/app/controllers/issue-controllers";
 import Link from "next/link";
 
 type CardProps = React.ComponentProps<typeof Card>;
@@ -37,7 +37,7 @@ export default async function ProjectCard({ className, project, ...props }: Proj
     
       <Card className={cn("w-[280px]", className)} {...props}>
         <div className="flex justify-between p-6">
-        <Link href={`/projects/${project.id}`}>
+        <Link href={`/dashboard/projects/${project.id}`}>
           <div className="flex items-start gap-4">
             
             <Avatar className="h-8 w-8">
@@ -75,7 +75,9 @@ export default async function ProjectCard({ className, project, ...props }: Proj
               <div className="h-2 w-2 rounded-full bg-green-500" />
               <span>Open {stats.open}/{stats.total}</span>
             </div>
-            <Separator orientation="vertical" className="h-4" />
+            <div className="h-10 flex items-center">
+              <Separator orientation="vertical" className="h-full" />
+            </div>
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-gray-500" />
               <span>Closed {stats.closed}/{stats.total}</span>
