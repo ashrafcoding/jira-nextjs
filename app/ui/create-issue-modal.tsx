@@ -70,7 +70,7 @@ export function CreateIssueModal({ projectId }: { projectId: string }) {
         description: "Issue created successfully",
       });
       form.reset();
-    } catch (error) {
+    } catch  {
       toast({
         title: "Error",
         description: "Failed to create issue",
@@ -82,7 +82,7 @@ export function CreateIssueModal({ projectId }: { projectId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Issue</Button>
+        <Button >Create Issue</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

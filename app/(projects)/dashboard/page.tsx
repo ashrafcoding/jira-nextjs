@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import { SlidersHorizontal } from "lucide-react";
 
+
+
 interface Project {
   id: string;
   name: string;
@@ -58,6 +60,9 @@ export default async function HomePage() {
         </div>
       </div>
 
+      
+      
+      
       <div className="flex-1 space-y-4 pt-4">
         <div className="grid gap-4 md:grid-cols-2 sm:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
           {projects.map((project) => (
@@ -69,6 +74,7 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
+
     </main>
   );
 }
