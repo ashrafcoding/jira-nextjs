@@ -3,54 +3,59 @@ import { Card } from "@/components/ui/card";
 
 export default function Loading() {
   return (
-    <div className="container space-y-6 p-6">
-      {/* Header with Create Project Button */}
-      <div className="flex justify-between items-center">
+    <main className="flex min-h-screen flex-col p-6">
+      {/* Header Section */}
+      <div className="flex items-center justify-between space-y-2">
         <div>
-          <Skeleton className="h-8 w-[200px] mb-2" /> {/* Dashboard title */}
-          <Skeleton className="h-4 w-[300px]" /> {/* Description */}
+          <Skeleton className="h-4 w-[100px] mb-2" /> {/* projects text */}
+          <div className="my-2">
+            <Skeleton className="h-8 w-[400px] mb-2" /> {/* Multi tasking heading */}
+            <Skeleton className="h-6 w-[300px]" /> {/* Name your projects text */}
+          </div>
         </div>
-        <Skeleton className="h-10 w-[150px]" /> {/* Create Project button */}
+        <div>
+          <Skeleton className="h-[300px] w-[600px]" /> {/* Image placeholder */}
+        </div>
+      </div>
+
+      {/* Projects Section */}
+      <div className="flex items-center justify-between space-y-2 mt-8">
+        <Skeleton className="h-8 w-[150px]" /> {/* Projects heading */}
+        <div className="flex items-center space-x-2">
+          <Skeleton className="h-10 w-[100px]" /> {/* Select */}
+          <Skeleton className="h-10 w-[100px]" /> {/* Button */}
+        </div>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-6">
         {[1, 2, 3, 4, 5, 6].map((index) => (
           <Card key={index} className="p-6 space-y-4">
-            {/* Project Header */}
             <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <Skeleton className="h-6 w-[180px]" /> {/* Project name */}
-                <Skeleton className="h-4 w-[120px]" /> {/* Created date */}
+              <div className="flex items-start gap-4">
+                <Skeleton className="h-9 w-9 rounded-full" /> {/* Avatar */}
+                <div>
+                  <Skeleton className="h-6 w-[180px]" /> {/* Project name */}
+                  <Skeleton className="h-4 w-[120px] mt-2" /> {/* Created date */}
+                </div>
               </div>
-              <Skeleton className="h-8 w-8 rounded-full" /> {/* Settings icon */}
+              <Skeleton className="h-8 w-8 rounded-full" /> {/* Menu icon */}
             </div>
-
-            {/* Project Description */}
-            <Skeleton className="h-12 w-full" />
 
             {/* Project Stats */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="space-y-2">
-                <Skeleton className="h-4 w-20" /> {/* Label */}
-                <Skeleton className="h-6 w-12" /> {/* Value */}
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-6 w-12" />
               </div>
               <div className="space-y-2">
-                <Skeleton className="h-4 w-20" /> {/* Label */}
-                <Skeleton className="h-6 w-12" /> {/* Value */}
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-6 w-12" />
               </div>
-            </div>
-
-            {/* Members Preview */}
-            <div className="flex items-center gap-2">
-              {[1, 2, 3].map((member) => (
-                <Skeleton key={member} className="h-8 w-8 rounded-full" />
-              ))}
-              <Skeleton className="h-4 w-16" /> {/* Members count */}
             </div>
           </Card>
         ))}
       </div>
-    </div>
+    </main>
   );
 }

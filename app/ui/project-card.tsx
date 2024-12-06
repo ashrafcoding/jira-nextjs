@@ -6,11 +6,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import MenuActions from "./menu-actions";
 import {  getProjectIssueStats } from "@/app/controllers/issue-controllers";
 import Link from "next/link";
+import { UploadProjectAvatar } from "./upload-project-avatar";
+
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -21,6 +22,7 @@ interface Project {
   owner_id: string;
   created_at: string;
   updated_at: string;
+  avatar_url: string | null;
   is_owner: boolean;
   member_role: string;
 }
@@ -37,21 +39,19 @@ export default async function ProjectCard({ className, project, ...props }: Proj
     
       <Card className={cn("w-[280px]", className)} {...props}>
         <div className="flex justify-between p-6">
-        <Link href={`/dashboard/projects/${project.id}`}>
+        
           <div className="flex items-start gap-4">
-            
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+          <UploadProjectAvatar projectId={project.id} currentAvatar={project.avatar_url||"./bug.png"} />
+
+            <Link href={`/dashboard/projects/${project.id}`}>
             <div>
               <CardTitle className="capitalize">{project.name}</CardTitle>
               <CardDescription className="mt-2">{project.description}</CardDescription>
               <Separator className="mt-4" />
             </div>
+            </Link>
           </div>
-          </Link>
-
+          
           <MenuActions 
             id={project.id} 
             name={project.name} 

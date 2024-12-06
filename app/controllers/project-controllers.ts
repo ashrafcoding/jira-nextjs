@@ -149,3 +149,17 @@ export async function getProjectMembers(projectId: string) {
     throw error;
   }
 }
+
+export async function updateProjectAvatar(projectId: string, avatarUrl: string) {
+  try {
+    await sql`
+      UPDATE projects
+      SET avatar_url = ${avatarUrl}
+      WHERE id = ${projectId}
+    `;
+    return true;
+  } catch (error) {
+    console.error('Error updating project avatar:', error);
+    throw error;
+  }
+}

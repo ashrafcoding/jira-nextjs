@@ -24,6 +24,7 @@ interface Project {
   owner_id: string;
   created_at: string;
   updated_at: string;
+  avatar_url: string | null;
   is_owner: boolean;
   member_role: string;
 }
@@ -39,6 +40,22 @@ export default async function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col p-6">
+      <div className="flex items-center justify-between space-y-2">
+        <div>
+          <p >-------- projects</p>
+          <hr  className="my-2"/>
+          <h1 className="text-3xl font-bold tracking-tight my-2">Multi tasking is hard. Focus is good.</h1>
+          <h2 >Name your projects the way your teams recognize it.</h2>
+        </div>
+      <div>
+      <Image
+        alt="bugs"
+        src="/bugs.svg"
+        width={600}
+        height={300}
+      />
+      </div>
+      </div>
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
         <div className="flex items-center space-x-2">
