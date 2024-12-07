@@ -1,18 +1,32 @@
 'use client'
 import { ModeToggle } from "@/components/mode-toggle";
-import {  useState } from "react";
-import * as Collapsible from "@radix-ui/react-collapsible";
-import { ChevronLeft, ChevronRight} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+// import {  useState } from "react";
+// import * as Collapsible from "@radix-ui/react-collapsible";
+// import { ChevronLeft, ChevronRight} from "lucide-react";
 import { signOut } from "next-auth/react"
 
 
 
+
 export default function SideNav() {
-  const [open, setOpen] = useState(false)
+  // const [open, setOpen] = useState(false)
   return (
     <div className="flex ">
       <div className="flex w-20 flex-col justify-between border-e bg-primary text-primary-foreground min-h-screen">
         <div>
+          <Link href="/">
+            <div className="inline-flex pl-2 size-16 items-center justify-center">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={45}
+                height={45}
+                className="rounded-full"
+              />
+            </div>
+          </Link>
           <div className="inline-flex size-16 items-center justify-center  ">
             <ModeToggle />
           </div>
@@ -168,6 +182,7 @@ export default function SideNav() {
         <div className="sticky inset-x-0 bottom-0 border-t border-gray-100  p-2">
           <form action="#">
             <button
+            onClick={()=>signOut()}
               type="submit"
               className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm  "
             >
@@ -194,7 +209,7 @@ export default function SideNav() {
         </div>
       </div >
 
-      <Collapsible.Root className="flex relative" open={open} onOpenChange={setOpen}>     
+      {/* <Collapsible.Root className="flex relative" open={open} onOpenChange={setOpen}>     
       <Collapsible.Content >
       <div className="flex h-full w-24 flex-col justify-between border-e ">
         <div>
@@ -378,8 +393,8 @@ export default function SideNav() {
       {open ? <ChevronLeft /> : <ChevronRight />}
 					</button>
 				</Collapsible.Trigger>
-      </Collapsible.Root>
-     
+      </Collapsible.Root> */}
+
     </div>
   );
 }

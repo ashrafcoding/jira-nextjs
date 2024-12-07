@@ -17,25 +17,25 @@ export function IssueStats({ stats }: IssueStatsProps) {
       title: "Total Issues",
       value: stats.total,
       icon: CircleDot,
-      className: "text-gray-500",
+      className: "text-blue-500 bg-blue-50 dark:bg-blue-950",
     },
     {
       title: "In Progress",
       value: stats.in_progress,
       icon: Clock,
-      className: "text-yellow-500",
+      className: "text-yellow-500 bg-yellow-50 dark:bg-yellow-950",
     },
     {
       title: "Resolved",
       value: stats.resolved,
       icon: CheckCircle2,
-      className: "text-green-500",
+      className: "text-green-500 bg-green-50 dark:bg-green-950",
     },
     {
       title: "Closed",
       value: stats.closed,
       icon: XCircle,
-      className: "text-red-500",
+      className: "text-red-500 bg-red-50 dark:bg-red-950",
     },
   ];
 
@@ -44,12 +44,14 @@ export function IssueStats({ stats }: IssueStatsProps) {
       {statCards.map((stat) => {
         const Icon = stat.icon;
         return (
-          <Card key={stat.title}>
+          <Card key={stat.title} className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {stat.title}
               </CardTitle>
-              <Icon className={`h-4 w-4 ${stat.className}`} />
+              <div className={`rounded-full p-2 ${stat.className}`}>
+                <Icon className="h-4 w-4" />
+              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stat.value}</div>
