@@ -119,3 +119,14 @@ export type IssueWithUsers = Issue & {
 export interface IssueCardProps {
   issue: IssueWithUsers;
 }
+
+export interface Sprint {
+  id: string;
+  name: string;
+  start_date: string;
+  end_date: string;
+  goal: string | null;
+  status: 'planned' | 'active' | 'completed';
+  started_at: string | null;
+  completed_at: string | null;
+}

@@ -9,10 +9,9 @@ import { signOut } from "next-auth/react"
 
 export default function SideNav() {
   const [open, setOpen] = useState(false)
-  // const ref = useRef(null)
   return (
     <div className="flex ">
-      <div className="flex w-20 flex-col justify-between border-e bg-primary text-primary-foreground">
+      <div className="flex w-20 flex-col justify-between border-e bg-primary text-primary-foreground min-h-screen">
         <div>
           <div className="inline-flex size-16 items-center justify-center  ">
             <ModeToggle />
