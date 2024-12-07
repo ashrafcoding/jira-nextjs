@@ -4,18 +4,7 @@ import Image from "next/image";
 import { getUserProjects } from "@/app/controllers/project-controllers";
 import ProjectCard from "@/app/ui/project-card";
 import { CreateProjectModal } from "@/app/ui/create-project-modal";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { SlidersHorizontal } from "lucide-react";
-
-
+import { ProjectFilters } from "@/app/ui/project-filters";
 
 interface Project {
   id: string;
@@ -29,69 +18,66 @@ interface Project {
   member_role: string;
 }
 
-export default async function HomePage() {
+interface PageProps {
+  searchParams: { filter?: string }
+}
+
+export default async function HomePage({ searchParams }: PageProps) {
   const session = await auth();
 
   if (!session?.user?.email) {
     redirect("/login");
   }
 
-  const projects = await getUserProjects(session.user.email);
+  const {filter} = await searchParams || 'all';
+
+  const projects = await getUserProjects(session.user.email) as Project[];
+
+  // Filter projects on the server side
+  const filteredProjects = filter === 'all' 
+    ? projects 
+    : filter === 'owned'
+      ? projects.filter(project => project.is_owner)
+      : projects.filter(project => !project.is_owner);
 
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex items-center justify-between space-y-2">
         <div>
-          <p >-------- projects</p>
-          <hr  className="my-2"/>
+          <p>-------- projects</p>
+          <hr className="my-2"/>
           <h1 className="text-3xl font-bold tracking-tight my-2">Multi tasking is hard. Focus is good.</h1>
-          <h2 >Name your projects the way your teams recognize it.</h2>
+          <h2>Name your projects the way your teams recognize it.</h2>
         </div>
-      <div>
-      <Image
-        alt="bugs"
-        src="/bugs.svg"
-        width={600}
-        height={300}
-      />
+        <div>
+          <Image
+            alt="bugs"
+            src="/bugs.svg"
+            width={600}
+            height={300}
+          />
+        </div>
       </div>
-      </div>
+
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
         <div className="flex items-center space-x-2">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SlidersHorizontal className="mr-2 h-4 w-4" />
-              <SelectValue placeholder="Filter by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Filter</SelectLabel>
-                <SelectItem value="all">All Projects</SelectItem>
-                <SelectItem value="owned">Owned Projects</SelectItem>
-                <SelectItem value="member">Member Projects</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <ProjectFilters />
           <CreateProjectModal />
         </div>
       </div>
 
-      
-      
-      
       <div className="flex-1 space-y-4 pt-4">
         <div className="grid gap-4 md:grid-cols-2 sm:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
-          {projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project as Project} 
-            className="w-full"
-          />
+          {filteredProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              className="w-full"
+            />
           ))}
         </div>
       </div>
-
     </main>
   );
 }
