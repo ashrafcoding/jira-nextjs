@@ -43,10 +43,12 @@ export default function MenuActions({ id, name, description, isOwner }: MenuActi
                 Edit Project
               </DropdownMenuItem>
             </EditProjectModal>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <Users className="mr-2 h-4 w-4" />
-              Manage Members
-            </DropdownMenuItem>
+            <ViewMembersModal projectId={id}>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <Users className="mr-2 h-4 w-4" />
+                View Members
+              </DropdownMenuItem>
+            </ViewMembersModal>
             <DropdownMenuSeparator />
             <DeleteAlert id={id}>
               <DropdownMenuItem
@@ -60,11 +62,11 @@ export default function MenuActions({ id, name, description, isOwner }: MenuActi
           </>
         ) : (
           <ViewMembersModal projectId={id}>
-          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <Users className="mr-2 h-4 w-4" />
-            View Members
-          </DropdownMenuItem>
-        </ViewMembersModal>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <Users className="mr-2 h-4 w-4" />
+              View Members
+            </DropdownMenuItem>
+          </ViewMembersModal>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

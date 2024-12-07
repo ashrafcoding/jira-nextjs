@@ -6,14 +6,16 @@ import { CreateIssueModal } from "@/app/ui/create-issue-modal";
 import { IssueStats } from "@/app/ui/issue-stats";
 import { IssueCard } from "@/app/ui/issue-card";
 
+type ProjectParams = Promise<{id: string}>
+   
 
-export default async function ProjectIssuesPage({ params }: { params: { id: string } }) {
+export default async function ProjectIssuesPage({ params }:{params: ProjectParams}) {
   const session = await auth();
 
   if (!session?.user?.email) {
     redirect("/login");
   }
-  const id = (await params).id;
+  const { id } = await params;
 
   const project = await getProject(id);
   const issues = await getProjectIssues(id);

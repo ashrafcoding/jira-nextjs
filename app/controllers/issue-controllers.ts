@@ -148,7 +148,7 @@ export async function createIssue(
 export async function updateIssueStatus(
   issueId: string,
   status: Issue['status'],
-  userEmail: string
+  // userEmail: string
 ): Promise<IssueWithUsers> {
   try {
     // First get the issue with user details
