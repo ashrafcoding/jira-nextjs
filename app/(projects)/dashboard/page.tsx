@@ -19,7 +19,10 @@ interface Project {
 }
 
 interface PageProps {
-  searchParams: { filter?: string }
+  searchParams: {
+    filter?: string;
+    search?: string;
+  }
 }
 
 export default async function HomePage({ searchParams }: PageProps) {
@@ -29,23 +32,32 @@ export default async function HomePage({ searchParams }: PageProps) {
     redirect("/login");
   }
 
-  const {filter} = await searchParams || 'all';
+  const { filter } = await searchParams || 'all';
+  const { search } = await searchParams || '';
 
   const projects = await getUserProjects(session.user.email) as Project[];
 
   // Filter projects on the server side
-  const filteredProjects = filter === 'all' 
-    ? projects 
+  let filteredProjects = filter === 'all'
+    ? projects
     : filter === 'owned'
       ? projects.filter(project => project.is_owner)
       : projects.filter(project => !project.is_owner);
+
+  // Apply search filter if search term exists
+  if (search) {
+    filteredProjects = filteredProjects.filter(project =>
+      project.name.toLowerCase().includes(search.toLowerCase()) ||
+      project.description.toLowerCase().includes(search.toLowerCase())
+    );
+  }
 
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex items-center justify-between space-y-2">
         <div>
           <p>-------- projects</p>
-          <hr className="my-2"/>
+          <hr className="my-2" />
           <h1 className="text-3xl font-bold tracking-tight my-2">Multi tasking is hard. Focus is good.</h1>
           <h2>Name your projects the way your teams recognize it.</h2>
         </div>
@@ -59,21 +71,18 @@ export default async function HomePage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
-        <div className="flex items-center space-x-2">
-          <ProjectFilters />
-          <CreateProjectModal />
-        </div>
+      <div className="flex items-center justify-between ">
+        <ProjectFilters />
+        <CreateProjectModal />
       </div>
 
-      <div className="flex-1 space-y-4 pt-4">
-        <div className="grid gap-4 md:grid-cols-2 sm:justify-items-center lg:grid-cols-3 xl:grid-cols-4">
+      <div className=" space-y-4 pt-4">
+        <div className=" grid gap-4 auto-rows-fr grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
-              className="w-full"
+              className="h-full"
             />
           ))}
         </div>

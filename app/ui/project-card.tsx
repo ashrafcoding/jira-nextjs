@@ -37,7 +37,7 @@ export default async function ProjectCard({ className, project, ...props }: Proj
   
   return (
     
-      <Card className={cn("w-[280px]", className)} {...props}>
+      <Card className={cn("min-w-[280px] ", className)} {...props}>
         <div className="flex justify-between p-6">
         
           <div className="flex items-start gap-4">
