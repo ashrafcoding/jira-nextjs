@@ -63,7 +63,7 @@ export default function LoginPreview() {
   }
 
   return (
-    <div className="flex flex-col min-h-[50vh] h-full w-full items-center justify-center p-4">
+     <div className="flex flex-col min-h-[50vh] h-full w-full items-center justify-center">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>

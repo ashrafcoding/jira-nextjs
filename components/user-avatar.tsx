@@ -22,12 +22,12 @@ interface UserAvatarProps {
 
 export function UserAvatar({ user }: UserAvatarProps) {
   const handleSignOut = () => {
-    signOut({ callbackUrl: '/login' });
+    signOut();
   };
 
   return (
     <DropdownMenu >
-      <DropdownMenuTrigger className='rounded-full' asChild>
+      <DropdownMenuTrigger className='rounded-full -mt-1' asChild>
         <Button variant="ghost"  className="relative h-10 w-10 pb-5 rounded-full">
           <Image
             src={'/avatar2.png'}
