@@ -5,14 +5,14 @@ import { ModeToggle } from "@/components/mode-toggle";
 import Link from "next/link";
 import Image from "next/image";
 import {auth} from "@/auth"
-
+import { UserAvatar } from '@/components/user-avatar';
 
 export async function Header() {
   const session = await auth();
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <nav className="flex items-center justify-between p-6 md:gap-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="  flex items-center gap-2">
             <span className="sr-only">Bug Buster</span>
@@ -38,7 +38,7 @@ export async function Header() {
           </button>
         </div>
         
-        <div className="hidden pt-2 lg:flex lg:gap-x-12">
+        <div className="hidden pt-2 md:flex md:gap-x-12">
           <Link href="/features" className="text-sm font-semibold leading-6">
             Features
           </Link>
@@ -53,21 +53,20 @@ export async function Header() {
           </Link>
         </div>
         
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+        <div className="hidden md:flex md:flex-1 md:justify-end md:gap-x-4 lg:flex lg:gap-x-4">
           <ModeToggle />
-          {session?.user?.email ? (
-            <Link href="/dashboard">
-              <Button>Dashboard</Button>
-            </Link>
-          ) : 
-          <div>
-          <Link href="/login">
-            <Button variant="ghost">Log in</Button>
-          </Link>
-          <Link href="/register">
-            <Button>Sign up</Button>
-          </Link>
-          </div>}
+          {session?.user ? (
+            <UserAvatar user={session.user} />
+          ) : (
+            <div>
+              <Link href="/login">
+                <Button variant="ghost">Log in</Button>
+              </Link>
+              <Link href="/register">
+                <Button>Sign up</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
     </header>

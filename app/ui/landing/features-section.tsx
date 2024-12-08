@@ -59,7 +59,7 @@ export function FeaturesSection() {
               Powerful features for modern teams
             </p>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              Built for today's fast-paced development teams, our platform provides all the tools you need to succeed.
+              Built for today&apos;s fast-paced development teams, our platform provides all the tools you need to succeed.
             </p>
           </motion.div>
         </div>
