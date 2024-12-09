@@ -26,8 +26,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { createProject } from "../controllers/project-controllers";
+import { createProject } from "@/app/controllers/project-controllers";
 import { useToast } from "@/hooks/use-toast"
+import { PlusCircle } from "lucide-react";
 
 
 const FormSchema = z.object({
@@ -72,7 +73,10 @@ export function CreateProjectModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Create Project</Button>
+        <Button>
+          <PlusCircle className="mr-1 h-4 w-4" />
+          Create Project
+          </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
         <DialogHeader>

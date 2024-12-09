@@ -23,8 +23,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { redirect, useSearchParams } from "next/navigation";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from 'lucide-react';
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -39,8 +41,7 @@ export default function LoginPreview() {
   const { data: session } = useSession();
   if (session?.user) redirect("/");
   const [loading, setIsLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const err = searchParams.get("error");
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,13 +53,32 @@ export default function LoginPreview() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    setError(null);
     try {
-      // Assuming an async login function
-      await signIn("credentials", values);
+      const result = await signIn("credentials", {
+        redirect: false,
+        ...values,
+      });
+
+      if (result?.error) {
+        // Handle specific error messages
+        switch (result.error) {
+          case 'CredentialsSignin':
+            setError('Invalid email or password. Please try again.');
+            break;
+          case 'AccessDenied':
+            setError('Access denied. Please check your credentials.');
+            break;
+          default:
+            setError('An unexpected error occurred. Please try again.');
+        }
+        setIsLoading(false);
+        return;
+      }
+    } catch  {
+      // Handle any network or unexpected errors
+      setError('An error occurred. Please try again later.');
       setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      console.error("Form submission error", error);
     }
   }
 
@@ -72,6 +92,13 @@ export default function LoginPreview() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {error && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="grid gap-4">
@@ -126,7 +153,7 @@ export default function LoginPreview() {
                   className="w-full disabled:opacity-25 disabled:animate-pulse"
                   disabled={loading}
                 >
-                  Login
+                  {loading ? 'Logging in...' : 'Login'}
                 </Button>
                 <Button variant="outline" className="w-full">
                   Login with Google
@@ -140,7 +167,6 @@ export default function LoginPreview() {
               Sign up
             </Link>
           </div>
-          {err && <p className="text-red-500">Invalid email or password</p>}
         </CardContent>
       </Card>
     </div>

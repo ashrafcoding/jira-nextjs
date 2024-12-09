@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { updateProject } from "../controllers/project-controllers";
+import { updateProject } from "@/app/controllers/project-controllers";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Select,
@@ -41,7 +41,7 @@ import {
   getProjectMembers, 
   removeProjectMember,
   updateMemberRole 
-} from "../controllers/member-controllers";
+} from "@/app/controllers/member-controllers";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 

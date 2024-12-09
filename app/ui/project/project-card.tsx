@@ -7,10 +7,10 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import MenuActions from "./menu-actions";
+import MenuActions from "@/app/ui/project/menu-actions";
 import {  getProjectIssueStats } from "@/app/controllers/issue-controllers";
 import Link from "next/link";
-import { UploadProjectAvatar } from "./upload-project-avatar";
+import { UploadProjectAvatar } from "@/app/ui/project/upload-project-avatar";
 
 
 type CardProps = React.ComponentProps<typeof Card>;

@@ -12,7 +12,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getProjectMembers } from "../controllers/project-controllers";
+import { getProjectMembers } from "../../controllers/project-controllers";
 
 interface Member {
   id: string;

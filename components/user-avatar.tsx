@@ -27,7 +27,7 @@ export function UserAvatar({ user }: UserAvatarProps) {
 
   return (
     <DropdownMenu >
-      <DropdownMenuTrigger className='rounded-full -mt-1' asChild>
+      <DropdownMenuTrigger asChild>
         <Button variant="ghost"  className="relative h-10 w-10 pb-5 rounded-full">
           <Image
             src={'/avatar2.png'}
@@ -37,7 +37,7 @@ export function UserAvatar({ user }: UserAvatarProps) {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-40 rounded-2xl" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user.name}</p>

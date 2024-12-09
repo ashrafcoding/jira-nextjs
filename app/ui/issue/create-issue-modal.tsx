@@ -32,8 +32,9 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createIssue } from "../controllers/issue-controllers";
+import { createIssue } from "../../controllers/issue-controllers";
 import { useToast } from "@/hooks/use-toast";
+import { PlusCircle } from "lucide-react";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -82,7 +83,10 @@ export function CreateIssueModal({ projectId }: { projectId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button >Create Issue</Button>
+        <Button >
+          <PlusCircle className="mr-1 h-4 w-4" />
+          Create Issue
+          </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -150,7 +154,9 @@ export function CreateIssueModal({ projectId }: { projectId: string }) {
               )}
             />
             <DialogFooter>
-              <Button type="submit">Create Issue</Button>
+              <Button type="submit" >
+                Create Issue
+                </Button>
             </DialogFooter>
           </form>
         </Form>

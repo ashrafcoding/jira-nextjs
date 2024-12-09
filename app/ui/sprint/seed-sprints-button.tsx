@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { seedSprintsForProject } from "../controllers/seed-sprints";
+import { seedSprintsForProject } from "@/app/controllers/seed-sprints";
 import { useRouter } from "next/navigation";
 
 export function SeedSprintsButton({ projectId }: { projectId: string }) {

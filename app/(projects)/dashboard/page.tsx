@@ -2,9 +2,9 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { getUserProjects } from "@/app/controllers/project-controllers";
-import ProjectCard from "@/app/ui/project-card";
-import { CreateProjectModal } from "@/app/ui/create-project-modal";
-import { ProjectFilters } from "@/app/ui/project-filters";
+import ProjectCard from "@/app/ui/project/project-card";
+import { CreateProjectModal } from "@/app/ui/project/create-project-modal";
+import { ProjectFilters } from "@/app/ui/project/project-filters";
 
 interface Project {
   id: string;
@@ -18,22 +18,19 @@ interface Project {
   member_role: string;
 }
 
-interface PageProps {
-  searchParams: {
-    filter?: string;
-    search?: string;
-  }
-}
+type sParams = Promise<{
+  filter?: string;
+  search?: string;  
+}>;
 
-export default async function HomePage({ searchParams }: PageProps) {
+export default async function HomePage({ searchParams }: {searchParams: sParams}) {
   const session = await auth();
 
   if (!session?.user?.email) {
     redirect("/login");
   }
 
-  const { filter } = await searchParams || 'all';
-  const { search } = await searchParams || '';
+  const { filter = 'all', search = '' } = await searchParams;
 
   const projects = await getUserProjects(session.user.email) as Project[];
 

@@ -1,8 +1,10 @@
+// import 'server-only';
 "use server";
-
-import { Issue, IssueWithUsers } from "@/lib/definitions";
-import { sql } from "@vercel/postgres";
-import { revalidatePath } from "next/cache";
+import { sql } from '@vercel/postgres';
+import { auth } from '@/auth';
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+import { Issue, IssueWithUsers } from '@/lib/definitions';
 
 interface IssueRow extends Omit<Issue, 'reporter_name' | 'reporter_email' | 'assignee_name' | 'assignee_email'> {
   reporter_name: string | null;
@@ -10,6 +12,21 @@ interface IssueRow extends Omit<Issue, 'reporter_name' | 'reporter_email' | 'ass
   assignee_name: string | null;
   assignee_email: string | null;
 }
+
+// Schema for issue editing
+const EditIssueSchema = z.object({
+  issueId: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  priority: z.enum(['low', 'medium', 'high', 'critical']).optional(),
+  status: z.enum(['open', 'in_progress', 'resolved', 'closed']).optional(),
+  assigneeEmail: z.string().email().optional().nullable()
+});
+
+// Schema for issue deletion
+const DeleteIssueSchema = z.object({
+  issueId: z.string()
+});
 
 export async function getProjectIssues(projectId: string): Promise<IssueWithUsers[]> {
   try {
@@ -202,5 +219,157 @@ export async function updateIssueStatus(
   } catch (error) {
     console.error(error);
     throw error;
+  }
+}
+
+export async function editIssue(formData: FormData) {
+  const session = await auth();
+  
+  if (!session?.user?.email) {
+    throw new Error('Unauthorized');
+  }
+
+  try {
+    // Parse and validate input
+    const rawData = {
+      issueId: formData.get('issueId'),
+      title: formData.get('title'),
+      description: formData.get('description'),
+      priority: formData.get('priority'),
+      status: formData.get('status'),
+      assigneeEmail: formData.get('assigneeEmail')
+    };
+
+    const validatedData = EditIssueSchema.parse(rawData);
+
+    // First, validate user permissions
+    const userCheck = await sql`
+      SELECT id FROM bug_users WHERE email = ${session.user.email}
+    `;
+
+    if (userCheck.rows.length === 0) {
+      throw new Error('User not found');
+    }
+
+    // Get current issue details
+    const currentIssue = await sql<IssueRow>`
+      SELECT 
+        i.*,
+        reporter.name as reporter_name,
+        reporter.email as reporter_email,
+        assignee.name as assignee_name,
+        assignee.email as assignee_email
+      FROM issues i
+      LEFT JOIN bug_users reporter ON i.reporter_id = reporter.id
+      LEFT JOIN bug_users assignee ON i.assignee_id = assignee.id
+      WHERE i.id = ${validatedData.issueId}
+    `;
+
+    if (!currentIssue.rows[0]) {
+      throw new Error('Issue not found');
+    }
+
+    // Prepare assignee update if provided
+    let assigneeId = null;
+    if (validatedData.assigneeEmail) {
+      const assignee = await sql`
+        SELECT id FROM bug_users WHERE email = ${validatedData.assigneeEmail}
+      `;
+      if (assignee.rows.length > 0) {
+        assigneeId = assignee.rows[0].id;
+      }
+    }
+
+    // Update issue
+    const issue = await sql<IssueRow>`
+      UPDATE issues
+      SET 
+        title = COALESCE(${validatedData.title}, title),
+        description = COALESCE(${validatedData.description}, description),
+        priority = COALESCE(${validatedData.priority}, priority),
+        status = COALESCE(${validatedData.status}, status),
+        assignee_id = COALESCE(${assigneeId}, assignee_id),
+        updated_at = NOW()
+      WHERE id = ${validatedData.issueId}
+      RETURNING *
+    `;
+
+    const updatedIssue: IssueWithUsers = {
+      ...issue.rows[0],
+      reporter_name: currentIssue.rows[0].reporter_name || undefined,
+      reporter_email: currentIssue.rows[0].reporter_email || undefined,
+      assignee_name: currentIssue.rows[0].assignee_name || undefined,
+      assignee_email: validatedData.assigneeEmail || currentIssue.rows[0].assignee_email || undefined,
+      assignee: validatedData.assigneeEmail ? {
+        name: currentIssue.rows[0].assignee_name!,
+        email: validatedData.assigneeEmail,
+      } : null,
+      reporter: {
+        name: currentIssue.rows[0].reporter_name!,
+        email: currentIssue.rows[0].reporter_email!,
+      },
+    };
+
+    revalidatePath("/dashboard");
+    revalidatePath(`/projects/${updatedIssue.project_id}`);
+    
+    return updatedIssue;
+  } catch (error) {
+    console.error('Error editing issue:', error);
+    throw error;
+  }
+}
+
+export async function deleteIssue(formData: FormData) {
+  const session = await auth();
+  
+  if (!session?.user?.email) {
+    throw new Error('Unauthorized');
+  }
+
+  try {
+    const rawData = {
+      issueId: formData.get('issueId')
+    };
+
+    const validatedData = DeleteIssueSchema.parse(rawData);
+
+    // First, validate user permissions
+    const userCheck = await sql`
+      SELECT id FROM bug_users WHERE email = ${session.user.email}
+    `;
+
+    if (userCheck.rows.length === 0) {
+      throw new Error('User not found');
+    }
+
+    // Get issue details to check project
+    const issueCheck = await sql`
+      SELECT project_id FROM issues WHERE id = ${validatedData.issueId}
+    `;
+
+    if (issueCheck.rows.length === 0) {
+      throw new Error('Issue not found');
+    }
+
+    // Delete the issue
+    await sql`
+      DELETE FROM issues 
+      WHERE id = ${validatedData.issueId}
+    `;
+
+    revalidatePath("/dashboard");
+    revalidatePath(`/projects/${issueCheck.rows[0].project_id}`);
+
+    return { 
+      success: true, 
+      message: 'Issue deleted successfully' 
+    };
+  } catch (error) {
+    console.error('Error deleting issue:', error);
+    return { 
+      success: false, 
+      message: error instanceof Error ? error.message : 'An unexpected error occurred' 
+    };
   }
 }

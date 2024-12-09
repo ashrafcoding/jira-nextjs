@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
-import { startSprint, completeSprint } from '../controllers/sprint-controllers';
+import { startSprint, completeSprint } from '@/app/controllers/sprint-controllers';
 import { 
   PlayCircle, 
   CheckCircle2, 

@@ -1,4 +1,4 @@
-import { ProjectNav } from "@/app/ui/project-nav";
+import { ProjectNav } from "@/app/ui/project/project-nav";
 import { getProject } from "@/app/controllers/project-controllers";
 import { Project } from "@/lib/definitions";
 
@@ -13,10 +13,10 @@ export default async function ProjectLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ id: string }> ;
+  params: Promise<{ projectId: string }> ;
 }) {
-    const { id } = await params;
-  const project = await getProject(id) as Project;
+    const { projectId } = await params;
+  const project = await getProject(projectId) as Project;
 
   return (
     <div className="flex h-screen bg-background">

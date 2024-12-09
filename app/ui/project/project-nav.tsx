@@ -70,7 +70,7 @@ export function ProjectNav({ project }: ProjectNavProps) {
   
 
   return (
-    <div className="flex w-56 flex-col border-r bg-background">
+    <div className="flex w-48 flex-col border-r bg-background">
       {/* Project Header */}
       <div className="flex flex-col items-center gap-3 p-6 border-b">
         <Avatar className="h-16 w-16">

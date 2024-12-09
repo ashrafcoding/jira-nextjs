@@ -3,16 +3,16 @@ import { redirect } from "next/navigation";
 import { getProject } from "@/app/controllers/project-controllers";
 import { getProjectIssues, getProjectIssueStats } from "@/app/controllers/issue-controllers";
 import { getProjectSprints } from "@/app/controllers/sprint-controllers";
-import { CreateIssueModal } from "@/app/ui/create-issue-modal";
-import { IssueStats } from "@/app/ui/issue-stats";
-import { IssueCard } from "@/app/ui/issue-card";
-import { SprintManagement } from "@/app/ui/sprint-management";
-import { SprintList } from "@/app/ui/sprint-list";
+import { CreateIssueModal } from "@/app/ui/issue/create-issue-modal";
+import { IssueStats } from "@/app/ui/issue/issue-stats";
+import { IssueCard } from "@/app/ui/issue/issue-card";
+import { SprintManagement } from "@/app/ui/sprint/sprint-management";
+import { SprintList } from "@/app/ui/sprint/sprint-list";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sprint } from "@/lib/definitions";
-import { SeedSprintsButton } from "@/app/ui/seed-sprints-button";
+import { SeedSprintsButton } from "@/app/ui/sprint/seed-sprints-button";
 
-type ProjectParams = Promise<{id: string}>
+type ProjectParams = Promise<{projectId: string}>
    
 export default async function ProjectIssuesPage({ params }:{params: ProjectParams}) {
   const session = await auth();
@@ -20,12 +20,12 @@ export default async function ProjectIssuesPage({ params }:{params: ProjectParam
   if (!session?.user?.email) {
     redirect("/login");
   }
-  const { id } = await params;
+  const { projectId } = await params;
 
-  const project = await getProject(id);
-  const issues = await getProjectIssues(id);
-  const stats = await getProjectIssueStats(id);
-  const sprints = await getProjectSprints(id);
+  const project = await getProject(projectId);
+  const issues = await getProjectIssues(projectId);
+  const stats = await getProjectIssueStats(projectId);
+  const sprints = await getProjectSprints(projectId);
 
   return (
     <div className="space-y-6 p-6 container mx-auto">
@@ -35,8 +35,8 @@ export default async function ProjectIssuesPage({ params }:{params: ProjectParam
           <p className="text-muted-foreground">{project.description}</p>
         </div>
         <div className="flex gap-2">
-          <SprintManagement projectId={id} />
-          <CreateIssueModal projectId={id} />
+          <SprintManagement projectId={projectId} />
+          <CreateIssueModal projectId={projectId} />
         </div>
       </div>
 
@@ -61,7 +61,7 @@ export default async function ProjectIssuesPage({ params }:{params: ProjectParam
           <div className="container mx-auto py-6">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-2xl font-bold">Project Sprints</h1>
-              {sprints.length === 0 && <SeedSprintsButton projectId={id} />}
+              {sprints.length === 0 && <SeedSprintsButton projectId={projectId} />}
             </div>
             <SprintList sprints={sprints as Sprint[]} />
           </div>

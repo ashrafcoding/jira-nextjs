@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { IssueCardProps } from "@/lib/definitions";
 import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
 
 const priorityColors = {
   low: "bg-gray-500",
@@ -20,6 +21,7 @@ const statusColors = {
 
 export function IssueCard({ issue }: IssueCardProps) {
   return (
+    <Link href={`/dashboard/projects/${issue.project_id}/issues/${issue.id}`}>
     <Card className="w-full mb-4 hover:shadow-lg transition-shadow">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex flex-col">
@@ -57,15 +59,16 @@ export function IssueCard({ issue }: IssueCardProps) {
               <span className="text-xs text-muted-foreground">Reporter</span>
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
-                  <AvatarImage src={`https://avatar.vercel.sh/${issue.reporter.email}`} />
-                  <AvatarFallback>{issue.reporter.name[0]}</AvatarFallback>
+                  <AvatarImage src={`https://avatar.vercel.sh/${issue.reporter?.email}`} />
+                  <AvatarFallback>{issue.reporter?.name[0]}</AvatarFallback>
                 </Avatar>
-                <span className="text-sm">{issue.reporter.name}</span>
+                <span className="text-sm">{issue?.reporter?.name}</span>
               </div>
             </div>
           </div>
         </div>
       </CardContent>
     </Card>
+    </Link>
   );
 }
