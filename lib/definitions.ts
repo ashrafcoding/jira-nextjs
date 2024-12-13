@@ -88,7 +88,7 @@ export type Product = {
 export type User = {
   id?: string;
   name?: string;
-  email: string;
+  email?: string;
   password: string;
   confirmPassword: string;
 };
@@ -108,3 +108,15 @@ export type FormState =
       message?: string;
     }
   | undefined;
+
+  export type Stats = {
+    total: number;
+    open ?: number;
+    in_progress?: number;
+    resolved?: number;
+    closed?: number;
+    low?: number;
+    medium?: number;
+    high?: number;
+    critical?: number;
+  };

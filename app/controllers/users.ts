@@ -3,6 +3,8 @@ import { sql } from "@vercel/postgres";
 import { User } from "../../lib/definitions";
 import bcrypt from "bcryptjs";
 
+
+
 export async function getAllUsers() {
   try {
     const users = await sql`SELECT * FROM bug_users`;
@@ -15,8 +17,8 @@ export async function getUser(email: string): Promise<User | undefined> {
   try {
     const user = await sql<User>`SELECT * FROM bug_users WHERE email=${email}`;
     return user.rows[0];
-  } catch {
-    console.error({ message: "Failed to fetch user." });
+  } catch  {
+    console.error({ message: "Failed to fetch user."});
   }
 }
 

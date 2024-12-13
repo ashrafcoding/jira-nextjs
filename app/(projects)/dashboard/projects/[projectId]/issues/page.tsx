@@ -1,5 +1,5 @@
 import { getProjectIssues } from '@/app/controllers/issue-controllers';
-import ProjectIssuesClient from '../../../../../ui/issue/project-issues-client';
+import ProjectIssuesClient from '@/app/ui/issue/project-issues-client';
 
 type Params = Promise<{ projectId: string }>;
 export const dynamic = 'force-dynamic';

@@ -4,6 +4,7 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { getUser } from "./app/controllers/users";
 
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
@@ -21,7 +22,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
 
       authorize: async (credentials) => {
-        const parsedCredentials = z
+      
+          const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(2) })
           .safeParse(credentials);
         if (parsedCredentials.success) {
@@ -31,10 +33,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const passwordsMatch = bcrypt.compareSync(password, user.password);
           if (passwordsMatch) return user;
         }
-
-        console.error("Invalid credentials");
-        return null;
+              
+        // console.error("Invalid credentials");
+        throw new Error("Invalid credentials");
+        // return null;
+        
       },
     }),
   ],
 });
+
+

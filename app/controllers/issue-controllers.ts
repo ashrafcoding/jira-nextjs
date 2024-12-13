@@ -99,6 +99,44 @@ export async function getProjectIssueStats(projectId: string): Promise<IssueStat
   }
 }
 
+export async function getIssuesStatsByUser(email: string): Promise<IssueStats> {
+  try {
+    const stats = await sql<IssueStats>`
+      SELECT 
+        COUNT(*) as total,
+        COUNT(*) FILTER (WHERE status = 'open') as open,
+        COUNT(*) FILTER (WHERE status = 'in_progress') as in_progress,
+        COUNT(*) FILTER (WHERE status = 'resolved') as resolved,
+        COUNT(*) FILTER (WHERE status = 'closed') as closed
+      FROM issues
+      WHERE reporter_id = (SELECT id FROM bug_users WHERE email = ${email})
+    `;
+    return stats.rows[0];
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+} 
+
+export async function getIssuesPriorityByUser(email: string): Promise<IssueStats> {
+  try {
+    const stats = await sql<IssueStats>`
+      SELECT 
+        COUNT(*) as total,
+        COUNT(*) FILTER (WHERE priority = 'critical') as critical,
+        COUNT(*) FILTER (WHERE priority = 'high') as high,
+        COUNT(*) FILTER (WHERE priority = 'medium') as medium,
+        COUNT(*) FILTER (WHERE priority = 'low') as low
+      FROM issues
+      WHERE reporter_id = (SELECT id FROM bug_users WHERE email = ${email})
+    `;
+    return stats.rows[0];
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export async function createIssue(
   projectId: string,
   title: string,
@@ -371,5 +409,56 @@ export async function deleteIssue(formData: FormData) {
       success: false, 
       message: error instanceof Error ? error.message : 'An unexpected error occurred' 
     };
+  }
+}
+
+export async function getUserIssues(email: string): Promise<IssueWithUsers[]> {
+  try {
+    const issues = await sql<IssueWithUsers>`
+      SELECT 
+        i.*,
+        reporter.name as reporter_name,
+        reporter.email as reporter_email,
+        assignee.name as assignee_name,
+        assignee.email as assignee_email
+      FROM issues i
+      LEFT JOIN bug_users reporter ON i.reporter_id = reporter.id
+      LEFT JOIN bug_users assignee ON i.assignee_id = assignee.id
+      WHERE reporter.email = ${email}  
+      ORDER BY 
+        CASE 
+          WHEN i.priority = 'critical' THEN 1
+          WHEN i.priority = 'high' THEN 2
+          WHEN i.priority = 'medium' THEN 3
+          WHEN i.priority = 'low' THEN 4
+        END,
+        i.created_at DESC
+    `;
+    return issues.rows;
+  } catch (error) {
+    console.error('Error fetching user issues:', error);
+    throw error;
+  }
+} 
+
+// Display the number of issues assigned to each team member, showing workload distribution.    
+export async function getIssueWorkload(): Promise<{ [key: string]: number }> {
+  try {
+    const workload = await sql<{
+      name: string;  count: number 
+}>`
+      SELECT u.name, COUNT(*) as count
+      FROM issues i
+      JOIN bug_users u ON i.assignee_id = u.id
+      GROUP BY u.name
+      ORDER BY count DESC
+    `;
+    return workload.rows.reduce((acc, item) => {
+      acc[item.name] = item.count;
+      return acc;
+    }, {} as { [key: string]: number });
+  } catch (error) {
+    console.error('Error fetching issue workload:', error);
+    throw error;
   }
 }

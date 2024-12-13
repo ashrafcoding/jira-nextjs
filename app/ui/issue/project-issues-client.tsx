@@ -64,7 +64,7 @@ export default function ProjectIssuesClient({
   projectId
 }: { 
   issues: IssueWithUsers[] ,
-  projectId: string
+  projectId?: string
 }) {
   const [issues, setIssues] = useState(initialIssues);
   const [selectedIssue, setSelectedIssue] = useState<IssueWithUsers | null>(null);
@@ -98,7 +98,7 @@ export default function ProjectIssuesClient({
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Project Issues</CardTitle>
-          <CreateIssueModal projectId={projectId} />
+          {projectId && <CreateIssueModal projectId={projectId} />}
           {/* <Button size="sm" variant="outline">
             <PlusCircle className="mr-2 h-4 w-4" /> Create Issue
           </Button> */}

@@ -70,7 +70,7 @@ export default function LoginPreview() {
             setError('Access denied. Please check your credentials.');
             break;
           default:
-            setError('An unexpected error occurred. Please try again.');
+            setError('Invalid email or password. Please try again.');
         }
         setIsLoading(false);
         return;

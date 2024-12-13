@@ -21,8 +21,8 @@ const statusColors = {
 
 export function IssueCard({ issue }: IssueCardProps) {
   return (
-    <Link href={`/dashboard/projects/${issue.project_id}/issues/${issue.id}`}>
-    <Card className="w-full mb-4 hover:shadow-lg transition-shadow">
+    <Link href={`/dashboard/projects/${issue.project_id}/issues/${issue.id}`} className="h-52">
+    <Card className="w-full h-full mb-4 hover:shadow-lg transition-shadow ">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex flex-col">
           <h3 className="font-semibold text-lg">{issue.title}</h3>
