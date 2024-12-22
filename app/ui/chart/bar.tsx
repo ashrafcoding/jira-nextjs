@@ -34,7 +34,7 @@ export function BarComponent({workload}: {workload: { [key: string]: number }}) 
       ...acc,
       [item.name]: {
         label: item.name,
-        color: `hsl(var(--chart-${ data.indexOf(item) > 4 ? data.indexOf(item)-4 : data.indexOf(item) + 1}))`,
+        color: `hsl(var(--chart-${ data.indexOf(item) > 7 ? data.indexOf(item)-7 : data.indexOf(item) + 1}))`,
       },
     }
   }, {} as ChartConfig)

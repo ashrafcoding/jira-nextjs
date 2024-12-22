@@ -50,7 +50,7 @@ export default async function HomePage({ searchParams }: {searchParams: sParams}
   }
 
   return (
-    <main className="flex min-h-screen flex-col p-6">
+    <main className="flex container min-h-screen flex-col p-6">
       <div className="flex items-center justify-between space-y-2">
         <div>
           <p>-------- projects</p>
@@ -60,6 +60,7 @@ export default async function HomePage({ searchParams }: {searchParams: sParams}
         </div>
         <div>
           <Image
+            priority
             alt="bugs"
             src="/bugs.svg"
             width={600}

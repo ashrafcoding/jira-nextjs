@@ -32,6 +32,7 @@ export function UserAvatar({ user }: UserAvatarProps) {
           <Image
             src={'/avatar2.png'}
             alt={user.name || 'User Avatar'}
+            sizes="30px"
             fill
             className="rounded-full object-cover"
           />

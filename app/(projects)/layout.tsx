@@ -14,7 +14,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex gap-10">
+    <div className="flex ">
       {/* Desktop Sidebar - Hidden on mobile */}
       <div className="hidden md:block">
         <SideNav user={session.user} />

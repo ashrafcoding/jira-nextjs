@@ -424,7 +424,7 @@ export async function getUserIssues(email: string): Promise<IssueWithUsers[]> {
       FROM issues i
       LEFT JOIN bug_users reporter ON i.reporter_id = reporter.id
       LEFT JOIN bug_users assignee ON i.assignee_id = assignee.id
-      WHERE reporter.email = ${email}  
+      WHERE assignee.email = ${email} OR reporter.email = ${email}   
       ORDER BY 
         CASE 
           WHEN i.priority = 'critical' THEN 1

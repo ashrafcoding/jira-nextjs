@@ -14,6 +14,10 @@ export default async function ReportsPage() {
   
   return (
     <div className="container p-5  ">
+      <div className="text-center p-5">
+        <h1 className="text-3xl font-bold mb-5">Activity Reports</h1>
+        <p className="mb-5">A comprehensive visual overview of bug status, trends, and metrics for effective monitoring and analysis.</p>
+      </div>
       <div className="flex gap-4 justify-around mb-5">
         <div className="flex-auto max-w-md">
           <Donut stats={stats} name="Status" />

@@ -130,7 +130,7 @@ export default function ProjectIssuesClient({
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    {issue.assignee?.name || 'Unassigned'}
+                    {issue.assignee_name || 'Unassigned'}
                   </TableCell>
                   <TableCell>
                     {formatDistanceToNow(new Date(issue.created_at), { addSuffix: true })}

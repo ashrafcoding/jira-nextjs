@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -13,9 +13,12 @@ import {
   GitBranch,
   Calendar,
   FileText,
-  Kanban
+  Kanban,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { Project } from '@/lib/definitions';
+import { useState } from 'react';
 
 interface ProjectNavProps {
   project: Project;
@@ -23,7 +26,12 @@ interface ProjectNavProps {
 
 export function ProjectNav({ project }: ProjectNavProps) {
   const pathname = usePathname();
-  
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
+  };
+
   const navigation = [
     {
       name: 'Overview',
@@ -67,55 +75,56 @@ export function ProjectNav({ project }: ProjectNavProps) {
     },
   ];
 
-  
-
   return (
-    <div className="flex w-48 flex-col border-r bg-background">
-      {/* Project Header */}
-      <div className="flex flex-col items-center gap-3 p-6 border-b">
-        <Avatar className="h-16 w-16">
-          {project.avatar_url ? (
-            <AvatarImage src={project.avatar_url} alt={project.name} />
-          ) : (
-            <AvatarFallback  className="bg-primary/10">
-              {project.name.slice(0, 2).toUpperCase()}
-            </AvatarFallback>
-          )}
-        </Avatar>
-        <div className="space-y-1">
-          <h2 className="text-sm font-semibold">{project.name}</h2>
-          {project.description && (
-            <p className="text-xs text-muted-foreground line-clamp-1">
-              {project.description}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Navigation Links */}
-      <nav className="flex-1 space-y-1 p-4">
-        {navigation.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="block"
-            >
-              <Button
-                variant={isActive ? 'secondary' : 'ghost'}
-                className={cn(
-                  'w-full justify-start gap-3',
-                  isActive && 'bg-secondary'
+    <div className=" relative  flex border-r bg-background">
+      <button onClick={toggleNav} className="absolute top-2 right-[-30px] p-1 border-2  rounded-full">
+        {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+      </button>
+      <div className={`${isOpen ? 'block' : 'hidden'} w-56 pl-4`}>
+        {isOpen && (
+          <div className="flex flex-col">
+            {/* Project Header */}
+            <div className="flex flex-col items-center gap-3 p-6 border-b">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={project.avatar_url || '/bug.png'} alt={project.name} />
+              </Avatar>
+              <div className="space-y-1">
+                <h2 className="text-sm font-semibold">{project.name}</h2>
+                {project.description && (
+                  <p className="text-xs text-muted-foreground line-clamp-1">
+                    {project.description}
+                  </p>
                 )}
-              >
-                <item.icon className="h-4 w-4" />
-                {item.name}
-              </Button>
-            </Link>
-          );
-        })}
-      </nav>
+              </div>
+            </div>
+
+            {/* Navigation Links */}
+            <nav className="flex-1 space-y-1 p-4">
+              {navigation.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block py-1"
+                  >
+                    <Button
+                      variant={isActive ? 'secondary' : 'ghost'}
+                      className={cn(
+                        'w-full justify-start gap-3',
+                        isActive && 'bg-secondary'
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.name}
+                    </Button>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

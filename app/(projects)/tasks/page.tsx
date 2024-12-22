@@ -7,6 +7,7 @@ export default async function TasksPage() {
     const session = await auth();
     const email = session?.user?.email;
     const issues = await getUserIssues(email as string);
+    
     return <ProjectIssuesClient issues={issues}  />;
 
   

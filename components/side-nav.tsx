@@ -71,10 +71,11 @@ export function SideNav({ user }: SideNavProps) {
             <Link
               href={href}
               className={`
-                flex items-center justify-center p-2 rounded-lg transition-colors duration-200
+                flex items-center justify-center py-2 rounded-xl transition-colors duration-200
                 ${isActive
-                  ? 'bg-primary/10 text-primary'
-                  : 'hover:bg-accent text-muted-foreground hover:text-foreground'}
+                  ?' bg-primary-foreground text-primary'
+                  :'hover:bg-primary-foreground/60 hover:text-primary'}
+                }
               `}
             >
               <Icon className="h-5 w-5" />
@@ -87,7 +88,7 @@ export function SideNav({ user }: SideNavProps) {
   };
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-22 bg-background border-r flex flex-col">
+    <aside className="fixed left-0 top-0 z-40 h-screen w-22  bg-primary text-primary-foreground border-r flex flex-col">
       <div className="flex h-full flex-col items-center">
         {/* Logo and Brand */}
         <div className="flex flex-col gap-3 items-center justify-center p-4 border-b w-full">
@@ -95,6 +96,7 @@ export function SideNav({ user }: SideNavProps) {
           <Link href="/" className="flex items-center justify-center">
             <Image
               src="/logo.png"
+              priority
               alt="Logo"
               width={45}
               height={45}
