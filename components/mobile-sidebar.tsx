@@ -19,9 +19,9 @@ export function MobileSidebar({ user }: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { href: '/features', label: 'Features' },
-    { href: '/pricing', label: 'Pricing' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '#pricing', label: 'Pricing' },
+    { href: '#contact', label: 'Contact' },
   ];
 
   return (

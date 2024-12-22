@@ -38,10 +38,10 @@ export default async function Header() {
           <Link href="/dashboard" className="text-sm font-semibold leading-6">
             Dashboard
           </Link>
-          <Link href="/pricing" className="text-sm font-semibold leading-6">
+          <Link href="#pricing" className="text-sm font-semibold leading-6">
             Pricing
           </Link>
-          <Link href="/contact" className="text-sm font-semibold leading-6">
+          <Link href="#contact" className="text-sm font-semibold leading-6">
             Contact
           </Link>
         </div>

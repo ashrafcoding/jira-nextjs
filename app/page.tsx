@@ -1,7 +1,9 @@
-import { HeroSection } from "@/app/ui/landing/hero-section";
-import { FeaturesSection } from "@/app/ui/landing/features-section";
-import { CTASection } from "@/app/ui/landing/cta-section";
-import  Header  from "@/app/ui/landing/header";
+import { HeroSection } from './ui/landing/hero-section';
+import { FeaturesSection } from './ui/landing/features-section';
+import PricingSection from './ui/landing/pricing-section';
+import { CTASection } from './ui/landing/cta-section';
+import Header from './ui/landing/header';
+import TailSection from './ui/landing/tail-section';
 
 export default function Home() {
   return (
@@ -10,7 +12,9 @@ export default function Home() {
       <main>
         <HeroSection />
         <FeaturesSection />
+        <PricingSection />
         <CTASection />
+        <TailSection />
       </main>
     </div>
   );
