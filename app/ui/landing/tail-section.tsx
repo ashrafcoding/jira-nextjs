@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
 
-const TailSection = () => {
+export default function TailSection(){
   return (
     <section className="py-16" id="contact" >
       <div className="container mx-auto px-4 text-center">
@@ -27,7 +26,7 @@ const TailSection = () => {
             href="mailto:support@example.com"
             className="text-blue-500 hover:underline"
           >
-            support@example.com
+            ashrafeid@gmail.com
           </Link>
         </div>
       </div>
@@ -35,4 +34,3 @@ const TailSection = () => {
   );
 };
 
-export default TailSection;

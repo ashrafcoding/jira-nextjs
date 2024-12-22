@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
-export function HeroSection() {
+export default function HeroSection() {
   return (
     <div className="relative">
       {/* Background Elements */}
