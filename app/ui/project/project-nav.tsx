@@ -8,12 +8,12 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   ListTodo,
-  Settings,
+  // Settings,
   Users,
-  GitBranch,
+  // GitBranch,
   Calendar,
-  FileText,
-  Kanban,
+  // FileText,
+  // Kanban,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
@@ -38,46 +38,46 @@ export function ProjectNav({ project }: ProjectNavProps) {
       href: `/dashboard/projects/${project.id}`,
       icon: LayoutDashboard
     },
-    {
-      name: 'Board',
-      href: `/dashboard/projects/${project.id}/board`,
-      icon: Kanban
-    },
+    // {
+    //   name: 'Board',
+    //   href: `/dashboard/projects/${project.id}/board`,
+    //   icon: Kanban
+    // },
     {
       name: 'Issues',
       href: `/dashboard/projects/${project.id}/issues`,
       icon: ListTodo
     },
     {
-      name: 'Calendar',
-      href: `/dashboard/projects/${project.id}/calendar`,
+      name: 'Sprints',
+      href: `/dashboard/projects/${project.id}/sprints`,
       icon: Calendar
     },
-    {
-      name: 'Documents',
-      href: `/dashboard/projects/${project.id}/documents`,
-      icon: FileText
-    },
+    // {
+    //   name: 'Documents',
+    //   href: `/dashboard/projects/${project.id}/documents`,
+    //   icon: FileText
+    // },
     {
       name: 'Team',
       href: `/dashboard/projects/${project.id}/team`,
       icon: Users
     },
-    {
-      name: 'Releases',
-      href: `/dashboard/projects/${project.id}/releases`,
-      icon: GitBranch
-    },
-    {
-      name: 'Settings',
-      href: `/dashboard/projects/${project.id}/settings`,
-      icon: Settings
-    },
+    // {
+    //   name: 'Releases',
+    //   href: `/dashboard/projects/${project.id}/releases`,
+    //   icon: GitBranch
+    // },
+    // {
+    //   name: 'Settings',
+    //   href: `/dashboard/projects/${project.id}/settings`,
+    //   icon: Settings
+    // },
   ];
 
   return (
     <div className=" relative  flex border-r bg-background">
-      <button onClick={toggleNav} className="absolute top-2 right-[-30px] p-1 border-2  rounded-full">
+      <button onClick={toggleNav} className="absolute top-12 right-[-30px] p-1 border-2  rounded-full">
         {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
       </button>
       <div className={`${isOpen ? 'block' : 'hidden'} w-56 pl-4`}>
@@ -99,7 +99,7 @@ export function ProjectNav({ project }: ProjectNavProps) {
             </div>
 
             {/* Navigation Links */}
-            <nav className="flex-1 space-y-1 p-4">
+            <nav className="flex-1 space-y-8 p-4">
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
                 return (

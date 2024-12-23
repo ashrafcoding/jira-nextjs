@@ -58,7 +58,7 @@ export default async function HomePage({ searchParams }: {searchParams: sParams}
           <h1 className="text-3xl font-bold tracking-tight my-2">Multi tasking is hard. Focus is good.</h1>
           <h2>Name your projects the way your teams recognize it.</h2>
         </div>
-        <div>
+        <div className="hidden  md:block">
           <Image
             priority
             alt="bugs"
@@ -69,7 +69,7 @@ export default async function HomePage({ searchParams }: {searchParams: sParams}
         </div>
       </div>
 
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between mt-6">
         <ProjectFilters />
         <CreateProjectModal />
       </div>

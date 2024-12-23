@@ -45,12 +45,12 @@ const chartConfig = {
     ...chartconf,
 } satisfies ChartConfig
   return (
-    <Card>
+    <Card className="">
       <CardHeader>
         <CardTitle>User Engagement</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer  config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis

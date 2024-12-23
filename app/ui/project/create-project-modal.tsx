@@ -108,6 +108,7 @@ export function CreateProjectModal() {
                         placeholder="enter a project name"
                         type="text"
                         {...field}
+                        value={field.value || ""}
                         className="col-span-3 text-xs"
                       />
                     </FormControl>
@@ -135,6 +136,7 @@ export function CreateProjectModal() {
                           placeholder="enter a project description"
                           type="text"
                           {...field}
+                          value={field.value || ""}
                           className="col-span-3 text-xs"
                         />
                       </FormControl>

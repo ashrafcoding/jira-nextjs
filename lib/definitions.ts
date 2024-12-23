@@ -120,3 +120,12 @@ export type FormState =
     high?: number;
     critical?: number;
   };
+
+  export interface Team {
+    id: string;
+    name: string;
+    description: string|null;
+    owner_id: string;
+    created_at: string;
+    updated_at: string;
+}

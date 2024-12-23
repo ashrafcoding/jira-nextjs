@@ -5,11 +5,11 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   Kanban,
-  Users,
+  // Users,
   Settings,
   HelpCircle,
-  Folder,
-  Briefcase,
+  // Folder,
+  // Briefcase,
   FileText
 } from 'lucide-react';
 import { UserAvatar } from './user-avatar';
@@ -38,16 +38,16 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { href: '/dashboard', label: 'dashboard', icon: LayoutDashboard },
-  { href: '/projects', label: 'Projects', icon: Folder },
+  // { href: '/projects', label: 'Projects', icon: Folder },
   { href: '/tasks', label: 'Issues', icon: Kanban },
-  { href: '/team', label: 'Team', icon: Users },
-  { href: '/workspaces', label: 'Workspaces', icon: Briefcase },
+  // { href: '/team', label: 'Team', icon: Users },
+  // { href: '/workspaces', label: 'Workspaces', icon: Briefcase },
   { href: '/reports', label: 'Reports', icon: FileText },
 ];
 
 const bottomNavItems: NavItem[] = [
-  { href: '/settings', label: 'Settings', icon: Settings },
-  { href: '/help', label: 'Help', icon: HelpCircle },
+  { href: '/team', label: 'Settings', icon: Settings },
+  { href: '/dashboard/#', label: 'Help', icon: HelpCircle },
 ];
 
 interface SideNavProps {
@@ -71,7 +71,7 @@ export function SideNav({ user }: SideNavProps) {
             <Link
               href={href}
               className={`
-                flex items-center justify-center py-2 rounded-xl transition-colors duration-200
+                flex items-center justify-center py-2  rounded-xl transition-colors duration-200
                 ${isActive
                   ?' bg-primary-foreground text-primary'
                   :'hover:bg-primary-foreground/60 hover:text-primary'}
@@ -109,7 +109,7 @@ export function SideNav({ user }: SideNavProps) {
         
 
         {/* Navigation */}
-        <nav className="flex-1 w-full p-2 space-y-2">
+        <nav className="flex-1 w-full p-2  space-y-8">
           
           {navItems.map((item) => (
             <NavItemComponent key={item.href} {...item} />
@@ -119,7 +119,7 @@ export function SideNav({ user }: SideNavProps) {
         {/* Bottom Navigation */}
         <div className="border-t w-full p-2 space-y-2">
           {bottomNavItems.map((item) => (
-            <NavItemComponent key={item.href} {...item} />
+            <NavItemComponent key={item.label} {...item} />
           ))}
 
           {/* User Avatar */}
@@ -144,7 +144,7 @@ export function MobileSideNav({ user }: SideNavProps) {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon">
-          <LayoutDashboard className="h-5 w-5" />
+          <LayoutDashboard className="h-4 w-4" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-64">

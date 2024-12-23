@@ -155,9 +155,9 @@ export default function LoginPreview() {
                 >
                   {loading ? 'Logging in...' : 'Login'}
                 </Button>
-                <Button variant="outline" className="w-full">
+                {/* <Button variant="outline" className="w-full">
                   Login with Google
-                </Button>
+                </Button> */}
               </div>
             </form>
           </Form>
@@ -167,6 +167,24 @@ export default function LoginPreview() {
               Sign up
             </Link>
           </div>
+
+          <Button
+                  type="submit"
+                  onClick={() => {
+                    setIsLoading(true);
+                    signIn('credentials', {
+                      email: 'ashraf@gmail.com',
+                      password: 'asd2507@',
+                      callbackUrl: '/',
+                    });
+                  }}
+                  className="w-full mt-5 disabled:opacity-25 disabled:animate-pulse"
+                  disabled={loading}
+                >
+                  {loading ? 'Logging in...' : 'Demo Login'}
+          </Button>
+                
+
         </CardContent>
       </Card>
     </div>
