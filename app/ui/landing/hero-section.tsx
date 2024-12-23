@@ -42,7 +42,7 @@ export default function HeroSection() {
                   Get Started
                 </Button>
               </Link>
-              <Link href="/features" className="text-sm font-semibold leading-6">
+              <Link href="#contact" className="text-sm font-semibold leading-6">
                 Learn more <span aria-hidden="true">→</span>
               </Link>
             </div>

@@ -32,7 +32,7 @@ export default function CTASection() {
               </Button>
             </Link>
             <Link
-              href="/contact"
+              href="#contact"
               className="text-sm font-semibold leading-6 text-white"
             >
               Contact sales <span aria-hidden="true">→</span>
