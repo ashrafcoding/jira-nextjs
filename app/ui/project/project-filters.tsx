@@ -51,7 +51,7 @@ export function ProjectFilters() {
 
   return (
     <div className="flex gap-4 items-center">
-      <div className="relative flex-1 max-w-sm">
+      <div className="relative flex-1 min-w-20 max-w-sm">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search projects..."
@@ -60,8 +60,9 @@ export function ProjectFilters() {
           className="pl-8"
         />
       </div>
+      <div className="flex-1">
       <Select value={filter} onValueChange={handleFilterChange}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="">
           <SlidersHorizontal className="mr-2 h-4 w-4" />
           <SelectValue placeholder="Filter by" />
         </SelectTrigger>
@@ -74,6 +75,7 @@ export function ProjectFilters() {
           </SelectGroup>
         </SelectContent>
       </Select>
+      </div>
     </div>
   );
 }

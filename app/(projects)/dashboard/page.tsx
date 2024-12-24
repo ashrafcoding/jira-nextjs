@@ -50,7 +50,7 @@ export default async function HomePage({ searchParams }: {searchParams: sParams}
   }
 
   return (
-    <main className="flex container min-h-screen m-auto flex-col p-10">
+    <main className="flex container min-h-screen m-auto flex-col py-10 px-6">
       <div className="flex items-center justify-between space-y-2">
         <div>
           <p>-------- projects</p>
@@ -69,7 +69,7 @@ export default async function HomePage({ searchParams }: {searchParams: sParams}
         </div>
       </div>
 
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mt-6">
         <ProjectFilters />
         <CreateProjectModal />
       </div>

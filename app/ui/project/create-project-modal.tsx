@@ -73,8 +73,8 @@ export function CreateProjectModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-1 h-4 w-4" />
+        <Button className="text-sm">
+          <PlusCircle  />
           Create Project
           </Button>
       </DialogTrigger>

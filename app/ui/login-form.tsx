@@ -111,7 +111,7 @@ export default function LoginPreview() {
                       <FormControl>
                         <Input
                           id="email"
-                          placeholder="johndoe@mail.com"
+                          placeholder="ashraf@mail.com"
                           type="email"
                           autoComplete="email"
                           {...field}
@@ -165,6 +165,13 @@ export default function LoginPreview() {
             Don&apos;t have an account?{" "}
             <Link href="/register" className="underline">
               Sign up
+            </Link>
+          </div>
+
+          {/* navigate to home */}
+          <div className="mt-4 text-center text-sm">
+            <Link href="/" className="underline">
+              Home
             </Link>
           </div>
 

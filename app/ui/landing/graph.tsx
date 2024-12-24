@@ -236,7 +236,7 @@ export function RadarComponent() {
 
   export default function Graph() {
     return (
-        <div className="flex gap-4 justify-around">
+        <div className="flex flex-col sm:flex-row gap-4 justify-around">
         <div className="flex-1  max-w-xlg">
           <PieComponent/>
         </div>

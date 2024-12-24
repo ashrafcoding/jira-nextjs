@@ -28,13 +28,13 @@ export default async function ProjectIssuesPage({ params }:{params: ProjectParam
   const sprints = await getProjectSprints(projectId);
 
   return (
-    <div className="space-y-6 p-6 container mx-auto">
+    <div className="space-y-6 p-6 container min-h-screen mx-auto">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">{project.name}</h2>
           <p className="text-muted-foreground">{project.description}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <SprintManagement projectId={projectId} />
           <CreateIssueModal projectId={projectId} />
         </div>

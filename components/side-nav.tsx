@@ -147,9 +147,21 @@ export function MobileSideNav({ user }: SideNavProps) {
           <LayoutDashboard className="h-4 w-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-64">
+      <SheetContent side="left" className="w-40 h-screen">
         <SheetHeader>
-          <SheetTitle>Bug Buster</SheetTitle>
+          <SheetTitle>
+            <Link href="/" className="flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              priority
+              alt="Logo"
+              width={45}
+              height={45}
+              className="rounded-full"
+            />         
+          </Link>
+          </SheetTitle>
+         
         </SheetHeader>
 
         <nav className="mt-6 space-y-2">
@@ -177,14 +189,16 @@ export function MobileSideNav({ user }: SideNavProps) {
 
         {user && (
           <div className="absolute bottom-4 left-4 right-4">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center justify-between space-x-3">
               <UserAvatar user={user} />
-              <div className="flex-1 min-w-0">
+              <ModeToggle />
+              
+              {/* <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{user.name}</p>
                 <p className="text-xs text-muted-foreground truncate">
                   {user.email}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         )}
