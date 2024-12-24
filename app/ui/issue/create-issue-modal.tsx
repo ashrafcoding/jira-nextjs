@@ -51,6 +51,8 @@ export function CreateIssueModal({ projectId }: { projectId: string }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       priority: "medium",
+      title: "",
+      description: "",
     },
   });
 
@@ -59,9 +61,9 @@ export function CreateIssueModal({ projectId }: { projectId: string }) {
 
     try {
       await createIssue(
-        values.title,
-        values.description,
         projectId,
+        values.title,
+        values.description,        
         session.user.email,
         values.priority
       );

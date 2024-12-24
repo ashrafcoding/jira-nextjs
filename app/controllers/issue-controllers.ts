@@ -149,7 +149,7 @@ export async function createIssue(
     // First, get user IDs
     const reporter = await sql`
       SELECT id, name FROM bug_users WHERE email = ${reporterEmail}
-    `;
+    `;    
     
     let assigneeId = null;
     let assigneeName = null;
@@ -160,6 +160,8 @@ export async function createIssue(
       if (assignee.rows.length > 0) {
         assigneeId = assignee.rows[0].id;
         assigneeName = assignee.rows[0].name;
+        console.log("assignee", assignee.rows[0]);
+
       }
     }
 
@@ -173,9 +175,9 @@ export async function createIssue(
       )
       RETURNING *
     `;
-
+    
     revalidatePath("/dashboard");
-    revalidatePath(`/projects/${projectId}`);
+    revalidatePath(`dashboard/projects/${projectId}/issues`);
 
     const createdIssue: IssueWithUsers = {
       ...issue.rows[0],

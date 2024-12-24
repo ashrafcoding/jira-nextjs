@@ -18,6 +18,7 @@ import { deleteTeam } from "@/app/controllers/users";
 export default function TeamMenuAction({team }:{team: Team}) {
     const handleDelete = async(e: Event) => {
         e.preventDefault();
+        if (!confirm('Are you sure you want to remove this team?')) return;
         await deleteTeam(team.id);        
     }
     return (

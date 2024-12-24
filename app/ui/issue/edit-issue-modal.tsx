@@ -88,25 +88,14 @@ export function EditIssueModal({
     
     // Create FormData
     const formData = new FormData();
-    formData.append('issueId', issue.id);
-    
-    // Append only changed values, ensuring non-undefined values
-    if (values.title && values.title !== issue.title) {
-      formData.append('title', values.title);
-    }
-    if (values.description !== undefined && values.description !== (issue.description || '')) {
-      formData.append('description', values.description);
-    }
-    if (values.priority && values.priority !== issue.priority) {
-      formData.append('priority', values.priority);
-    }
-    if (values.status && values.status !== issue.status) {
-      formData.append('status', values.status);
-    }
-    if (values.assigneeEmail !== undefined && 
-        values.assigneeEmail !== (issue.assignee?.email || null)) {
-      formData.append('assigneeEmail', values.assigneeEmail || '');
-    }
+    formData.append('issueId', issue.id)
+    formData.append('title', values.title);
+    formData.append('description', values.description || '');
+    formData.append('priority', values.priority || "medium");
+    formData.append('status', values.status || "open");
+    if(values.assigneeEmail) {
+      formData.append('assigneeEmail', values.assigneeEmail);
+    } 
 
     try {
       startTransition(async () => {
